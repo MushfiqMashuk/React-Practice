@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Todo List React App</title>
+
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    </head>
+    <body>
+
+        <div id="app"></div>
+
+        <style>
+
+            .listStyle{
+                list-style-type: upper-roman;
+            }
+
+        </style>
+ 
+        <script type="text/babel">
+
+            class MyTodo extends React.Component{
+
+                constructor(props){
+                    super(props);
+
+                    this.state = {
+                        tasks: [],
+                        input: ""
+                    }
+                }
+
+                render(){
+
+                    return(
+
+                        <div>
+                            <h1>Tasks</h1>
+                            <p>Number of Tasks : {this.state.tasks.length}</p>
+                            <ul className="listStyle">
+                                {
+                                    this.state.tasks.map((task, i) =>
+                                        <li key= {i}>
+                                            <button style={{cursor: "pointer"}} data-index={i} data-ind="Test" onClick={this.deleteTask}>Delete</button>
+                                            {task}
+                                        </li>
+                                        
+                                    )
+                                }
+                            </ul>
+                            
+                            <div>
+                                <input onKeyPress={this.addTasks2} onChange= {this.updateValue} value={this.state.input}/>
+                                <button style={{cursor: "pointer"}} onClick={this.addTasks}>Add Task</button>
+                            </div>
+
+                        </div>
+
+                    );
+                }
+
+                updateValue = (event) => {
+                    this.setState({input: event.target.value})
+                }
+
+                addTasks = () => { 
+                    if(this.state.input !== ""){
+                        this.setState(
+                            state => ({
+                                tasks: [...state.tasks, state.input],
+                                input: ""
+                            })
+                        )
+                    }
+                    
+                }
+
+                addTasks2 = (event) => {
+                    if(event.key === "Enter"){
+                        this.addTasks();
+                    }
+                }
+
+                deleteTask = (event) =>{
+
+                    console.log(event.target.dataset);
+
+                    const index = event.target.dataset.index;
+
+                    this.setState(state =>{
+
+                        const tasks = [...state.tasks];
+                        tasks.splice(index,1);
+
+                        return {
+                            tasks: tasks
+                        }
+
+                    })
+                }
+
+            }
+
+            ReactDOM.render(<MyTodo/>, document.querySelector('#app'));
+            
+
+        </script>
+        
+    </body>
+</html>

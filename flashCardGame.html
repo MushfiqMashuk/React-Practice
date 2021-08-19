@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Flash Cards</title>
+
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    </head>
+    <body>
+
+        <div id="app"></div>
+
+        <script type="text/babel">
+
+            class CardEditor extends React.Component{
+
+                render(){
+
+                    const rows = this.props.cards.map((card, i)=>{
+                        return(
+                            <tr key={i}>
+                                <td>{card.front}</td>
+                                <td>{card.back}</td>
+                                <td><button>Delete</button></td>
+                            </tr>
+                        );
+                    })
+
+                    return(
+                        <div>
+                            <h2>Card Editor</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td>Front</td>
+                                        <td>Back</td>
+                                        <td>Delete</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {rows}
+                                </tbody>
+                            </table>
+
+                            <hr/>
+
+                            <button onClick={this.props.switchMode}>Switch to Viewer</button>
+                        </div>
+                    );
+                }
+            }
+
+            class CardViewer extends React.Component{
+
+                render(){
+                    return(
+                        <div>
+                            This is the Viewer
+                            <hr/>
+                            <button onClick={this.props.switchMode}>Switch to Editor</button>
+                        </div>
+                    )
+                }
+            }
+
+
+            class App extends React.Component{
+
+                constructor(props){
+                    super(props);
+
+                    this.state = {
+                        editor: true,
+                        cards: [{"front": "1+3", "back": "4"},
+                                {"front": "7+3", "back": "10"}],
+                    };
+                }
+
+                render(){
+
+                    if(this.state.editor){
+                        return(
+                            <CardEditor
+                            cards={this.state.cards}
+                            switchMode = {this.switchMode}
+                            />
+                        );
+                    }
+                    
+                    else{
+                        return(
+                            <CardViewer
+                            cards={this.state.cards} 
+                            switchMode = {this.switchMode}
+                            />
+                        );
+                    }
+                    
+                }
+
+                switchMode = () =>{
+                    this.setState(state => ({
+                        editor: !state.editor
+                    }))
+                }
+
+            }
+
+            ReactDOM.render(<App/>, document.querySelector("#app"));
+
+        </script>
+        
+    </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>React App</title>
+
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    </head>
+    <body>
+
+        <div id="app"></div>
+
+        <script type="text/babel">
+
+            const name = "Mashuk";
+
+            const bigName = <h1>My name is {name}</h1>;
+
+            class Hello extends React.Component{
+
+                render(){
+
+                    return(
+                        <div>
+                            <h3>
+                                Hello {this.props.name || "Boltu"}
+                            </h3>
+
+                            <p>
+                                Your Age is {this.props.age}
+                            </p>    
+                        </div>
+                    )
+                }
+
+            }
+
+            class BigHello extends React.Component{
+
+                render(){
+
+                    return(
+
+                        <div>
+                            <Hello age="24"/>
+                            <Hello name="Thor" age="45"/>
+                            <Hello name="Kohli" age="33"/>    
+                        </div>
+
+                    );
+                }
+            }
+
+            
+            ReactDOM.render(bigName, document.querySelector('#app'));
+
+            ReactDOM.render(<BigHello/>, document.querySelector('#app'));
+
+        </script>
+        
+    </body>
+</html>

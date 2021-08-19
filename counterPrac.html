@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React App</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    
+
+</head>
+<body>
+    
+    <div id="root"></div>
+    
+    <div id="nice"></div>
+
+    <script type="text/babel">
+
+        class Counter extends React.Component{
+            
+
+            constructor(props){
+                super(props);
+
+                this.state = {counter: 0};
+            }
+
+            render(){
+                return(
+                    <div>
+                        <h1>{this.state.counter}</h1>
+                        <button onClick={this.increment}>Increment</button>
+                        <button onClick={this.decrement}>Decrement</button>
+                    </div>
+                );
+            }
+
+            increment = () => {
+                this.setState(oldState => ({counter: oldState.counter+1}));
+            }
+
+            decrement = () => {
+                
+                this.setState(oldState => ({counter: oldState.counter-1}))
+            }
+
+        }
+
+        class App extends React.Component{
+
+            render(){
+
+                return(
+                    <div>
+                        <Counter/>
+                        <Counter/>
+                        <Counter/>
+                    </div>
+                );
+            }
+
+        }
+
+        ReactDOM.render(<App/>, document.querySelector("#root"));
+
+    </script>
+
+</body>
+</html>
